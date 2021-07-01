@@ -20,12 +20,12 @@ class LSTM(nn.Module):
         self.output_size = output_size
         self.lstm = nn.LSTM(input_size, hidden_size, n_layers, dropout=dropout_prob, batch_first=True)
         self.fc = nn.Linear(hidden_size, output_size)
-        #self.sigmoid = nn.Sigmoid()
+        self.sigmoid = nn.Sigmoid()
 
     def forward(self, x, hidden):
         out, lstm_hidden = self.lstm(x, hidden)  # Size [batch_size, n_days, n_features]
         out = self.fc(out)
-        #out = self.sigmoid(out)
+        out = self.sigmoid(out)
         out = out[:, :, 0].clone()
         return out, lstm_hidden
 
